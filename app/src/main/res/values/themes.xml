@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Dicoding_finalproject_basicandroid" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryVariant">@color/pink_dark</item>
+        <item name="colorOnPrimary">@color/pink_texticons</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/worksans_variablefont_wght</item>
+    </style>
+
+    <style name="myNoActionBar" parent="Theme.Dicoding_finalproject_basicandroid">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="heading_style_font">
+        <item name="fontFamily">@font/worksans_variablefont_wght</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="Theme.Dicoding_finalproject_basicandroid.Fullscreen" parent="Theme.Dicoding_finalproject_basicandroid">
+        <item name="android:actionBarStyle">
+            @style/Widget.Theme.Dicoding_finalproject_basicandroid.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.Dicoding_finalproject_basicandroid.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+</resources>
