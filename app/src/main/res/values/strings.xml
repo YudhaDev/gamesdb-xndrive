@@ -91,5 +91,7 @@ Collect and Build! - Collect, upgrade, and build thousands of items in the most 
     <string name="pick_camera_text">Kamera</string>
     <string name="pick_gallery_text">Galeri</string>
     <string name="back_key_exit_text">Tekan sekali lagi untuk keluar dari aplikasi.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

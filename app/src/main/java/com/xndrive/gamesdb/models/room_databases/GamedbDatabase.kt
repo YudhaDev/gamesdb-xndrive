@@ -20,7 +20,7 @@ abstract class GamedbDatabase : RoomDatabase(){
 
         fun getGamedbDatabase(context: Context) : GamedbDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, GamedbDatabase::class.java, "gamedb_database")
+                val instance = Room.databaseBuilder(context, GamedbDatabase::class.java, "gamedb_database")
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

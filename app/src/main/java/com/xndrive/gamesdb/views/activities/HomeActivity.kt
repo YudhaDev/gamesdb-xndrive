@@ -11,21 +11,28 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationBarView
 import com.xndrive.gamesdb.R
+import com.xndrive.gamesdb.databinding.ActivityHomeBinding
 import com.xndrive.gamesdb.etc.adapter.AdapterHomeRecycler
 import com.xndrive.gamesdb.models.data.GameModel
+import com.xndrive.gamesdb.views.fragments.*
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
-    private var homeActivityView: View? = null
-    private var activity_home_games_recyclerview: RecyclerView? = null
-    private var activity_home_pilihjenisTampilan_textview: TextView? = null
+    private var activityHomeBinding : ActivityHomeBinding? = null
     private var gameData: ArrayList<GameModel>? = null
 
     private var backkey_pressed = -1
+
+    //fragments
+    private val newestFragment = NewestFragment()
+    private val trendingFragment = TrendingFragment()
+    private val favouriteFragment = FavouriteFragment()
 
     companion object {
         val HOMEACTIVITY_BUNDLEKEY = "game-bundle"
@@ -35,9 +42,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = LayoutInflater.from(this)
-        homeActivityView = inflater.inflate(R.layout.activity_home, null)
-        setContentView(homeActivityView)
-
+        
+        activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(activityHomeBinding!!.root)
+        
         supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         supportActionBar!!.setTitle("Game List")
 
@@ -57,28 +65,23 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         })
-        activity_home_games_recyclerview!!.adapter = adapter
-        //Linear
-        val layoutManager = LinearLayoutManager(applicationContext)
-        activity_home_games_recyclerview!!.layoutManager = layoutManager
-        //Grid
-        //val gridLayoutManager = GridLayoutManager(applicationContext, 2)
-        //activity_home_games_recyclerview!!.layoutManager = gridLayoutManager
-
-        activity_home_games_recyclerview!!.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                layoutManager.orientation
+        with(activityHomeBinding!!.activityHomeGamesRecyclerview){
+            this.adapter = adapter
+            //Linear
+            val layoutManager = LinearLayoutManager(applicationContext)
+            this.layoutManager = layoutManager
+            this.addItemDecoration(
+                DividerItemDecoration(
+                    applicationContext,
+                    layoutManager.orientation
+                )
             )
-        )
+        }
+
     }
 
     private fun determine() {
-        activity_home_games_recyclerview =
-            homeActivityView!!.findViewById(R.id.activity_home_games_recyclerview)
-        activity_home_pilihjenisTampilan_textview =
-            homeActivityView!!.findViewById(R.id.activity_home_pilihjenisTampilan_textview)
-        activity_home_pilihjenisTampilan_textview!!.setOnClickListener(this)
+        activityHomeBinding!!.activityHomePilihjenisTampilanTextview.setOnClickListener(this)
         gameData = ArrayList()
         with(gameData!!) {
             this.add(
@@ -197,7 +200,40 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             )
 
         }
+        
+        handleBottomnavClick()
     }
+
+    private fun handleBottomnavClick() {
+        activityHomeBinding!!.activityHomeBottomnav.setOnItemSelectedListener(object : NavigationBarView.OnItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                    R.id.bottomnav_menus_newest -> {
+//                        Toast.makeText(this@HomeActivity, "newest diklik", Toast.LENGTH_SHORT).show()
+                        supportFragmentManager.beginTransaction().replace(R.id.activity_home_fragment_container, newestFragment).commit()
+                        return true
+                    }
+                    
+                    R.id.bottomnav_menus_trending -> {
+//                        Toast.makeText(this@HomeActivity, "trending diklik", Toast.LENGTH_SHORT).show()
+                        supportFragmentManager.beginTransaction().replace(R.id.activity_home_fragment_container, trendingFragment).commit()
+                        return true
+                    }
+                    
+                    R.id.bottomnav_menus_favourite -> {
+//                        Toast.makeText(this@HomeActivity, "favourite", Toast.LENGTH_SHORT).show()
+                        supportFragmentManager.beginTransaction().replace(R.id.activity_home_fragment_container, favouriteFragment).commit()
+                        return true
+                    }
+                    else -> {
+                        return false
+                    }
+                }
+            }
+
+        })
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.actionbar_more, menu)
@@ -218,54 +254,33 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 return true
             }
         }
-//        when(item.itemId){
-//            R.id.actionbar_options -> {
-//                val popMenu = PopupMenu(applicationContext, findViewById(item.itemId))
-//                popMenu.menuInflater.inflate(R.menu.options_menu, popMenu.menu)
-//                popMenu.setOnMenuItemClickListener(object: PopupMenu.OnMenuItemClickListener{
-//                    override fun onMenuItemClick(p0: MenuItem?): Boolean {
-//                        when(p0!!.itemId){
-//                            R.id.optionsmenu_about -> {
-//                                val intent = Intent(applicationContext, AboutActivity::class.java)
-//                                startActivity(intent)
-//                                return true
-//                            }
-//                            else -> {
-//                                return true
-//                            }
-//                        }
-//                    }
-//
-//                })
-//                popMenu.show()
-//                return true
-//            }
-//            else -> {
-//                return super.onOptionsItemSelected(item)
-//            }
-//        }
     }
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.activity_home_pilihjenisTampilan_textview -> {
                 val popUpMenu =
-                    PopupMenu(applicationContext, activity_home_pilihjenisTampilan_textview)
+                    PopupMenu(applicationContext, activityHomeBinding!!.activityHomePilihjenisTampilanTextview)
                 popUpMenu.menuInflater.inflate(R.menu.options_pilihtampilan, popUpMenu.menu)
                 popUpMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
                     override fun onMenuItemClick(p0: MenuItem?): Boolean {
                         when (p0!!.itemId) {
                             R.id.options_pilihtampilan_linear -> {
                                 val linearLayoutManager = LinearLayoutManager(applicationContext)
-                                activity_home_games_recyclerview!!.layoutManager =
-                                    linearLayoutManager
-                                activity_home_games_recyclerview!!.adapter!!.notifyDataSetChanged()
+                                with(activityHomeBinding!!.activityHomeGamesRecyclerview){
+                                    this.layoutManager =
+                                        linearLayoutManager
+                                    this.adapter!!.notifyDataSetChanged()
+                                }
+
                                 return true
                             }
                             R.id.options_pilihtampilan_grid -> {
                                 val gridLayoutManager = GridLayoutManager(applicationContext, 2)
-                                activity_home_games_recyclerview!!.layoutManager = gridLayoutManager
-                                activity_home_games_recyclerview!!.adapter!!.notifyDataSetChanged()
+                                with(activityHomeBinding!!.activityHomeGamesRecyclerview){
+                                    this.layoutManager = gridLayoutManager
+                                    this.adapter!!.notifyDataSetChanged()
+                                }
                                 return true
                             }
                             else -> {

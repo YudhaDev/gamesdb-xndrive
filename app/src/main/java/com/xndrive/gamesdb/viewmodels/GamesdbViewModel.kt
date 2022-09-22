@@ -15,7 +15,8 @@ class GamesdbViewModel(private val repository: GamesdbRepository):ViewModel() {
     fun insert(userBiodataEntity: UserBiodataEntity) = viewModelScope.launch{
         repository.insertUserBiodata(userBiodataEntity)
     }
-    fun getUserBiodata(user_id : Int) =
+    fun getUserBiodata(user_id : Int): LiveData<List<UserBiodataEntity>> =
         repository.getUserBiodata(user_id).asLiveData()
+    fun getAllUser() = repository.getAllUser().asLiveData()
 }
 
