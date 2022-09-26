@@ -9,13 +9,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
 import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.databinding.ActivityHomeBinding
@@ -59,7 +56,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             override fun onItemclicked(data: GameModel) {
                 val bundle = Bundle()
                 bundle.putSerializable(HOMEACTIVITY_BUNDLEKEY, data)
-                val intent = Intent(applicationContext, DetailActivity::class.java)
+                val intent = Intent(applicationContext, GameDetailActivity::class.java)
                 intent.putExtra(HOMEACTIVITY_EXTRAKEY, bundle)
                 startActivity(intent)
             }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.xndrive.gamesdb.views.activities.DetailActivity
+import com.xndrive.gamesdb.views.activities.GameDetailActivity
 import com.xndrive.gamesdb.views.activities.HomeActivity
 import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.models.data.GameModel
@@ -59,7 +59,7 @@ class AdapterHomeRecycler(val context : Context, val list : List<GameModel>) : R
 
         //cara1
         holder.itemView.setOnClickListener{
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, GameDetailActivity::class.java)
             intent.putExtra(HomeActivity.HOMEACTIVITY_EXTRAKEY, list[position])
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) //perlu tambahan flag kalo pindah activity diluar activity class
             context.startActivity(intent)

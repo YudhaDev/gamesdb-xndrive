@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.fragments.PickStarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/_20sdp"
+        >
+
+        <TextView
+            style="@style/heading_style_font"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Rating"
+            android:textAlignment="center"
+            android:padding="@dimen/_10sdp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            >
+
+            <RatingBar
+                android:id="@+id/fragment_pick_star_ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:numStars="5"
+                android:layout_margin="@dimen/_10sdp"
+                android:rating="4"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_pick_star_next_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_pick_star_ratingbar"
+                android:layout_alignStart="@+id/fragment_pick_star_ratingbar"
+                android:layout_alignEnd="@+id/fragment_pick_star_ratingbar"
+                android:layout_marginStart="-60dp"
+                android:layout_marginEnd="-60dp"
+                android:backgroundTint="@color/pink_accent_color"
+                android:text="Selanjutnya"
+                app:cornerRadius="30dp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
