@@ -17,4 +17,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fragment_landing_lewati_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lewati"
+        app:cornerRadius="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

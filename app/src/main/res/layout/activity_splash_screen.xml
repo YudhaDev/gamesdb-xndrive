@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.SplashScreenActivity">
 
-
-
     <fragment
-        android:id="@+id/activity_splash_screen_fragmen"
+        android:id="@+id/activity_splash_screen_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/navigation_splashscreen"

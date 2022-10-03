@@ -1,6 +1,7 @@
 package com.xndrive.gamesdb.views.fragments
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.databinding.FragmentLandingBinding
+import com.xndrive.gamesdb.views.activities.HomeActivity
 import com.xndrive.gamesdb.views.activities.SplashScreenActivity
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,7 +57,10 @@ class LandingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        fragmentLandingBinding.fragmentLandingLewatiBtn.setOnClickListener {
+            startActivity(Intent(requireActivity(), HomeActivity::class.java))
+            requireActivity().finish()
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -68,7 +73,7 @@ class LandingFragment : Fragment() {
             if (position<2){
                 return LandingItemFragment(position)
             } else {
-                return
+                return LandingLastFragment()
             }
         }
 
