@@ -20,12 +20,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="heading_style_font">
-        <item name="fontFamily">@font/worksans_variablefont_wght</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
 
-    </style>
 
     <style name="Theme.Dicoding_finalproject_basicandroid.Fullscreen" parent="Theme.Dicoding_finalproject_basicandroid">
         <item name="android:actionBarStyle">

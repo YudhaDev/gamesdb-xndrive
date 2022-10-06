@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="full_transparent">#00000000</color>
+    <color name="pink">#03A9F4</color>
+
+    <color name="ascent1">#1e1e1e</color>
+</resources>

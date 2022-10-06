@@ -21,6 +21,7 @@ import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.databinding.ActivitySplashScreenBinding
 import com.xndrive.gamesdb.databinding.FragmentSplashBinding
 import com.xndrive.gamesdb.views.fragments.SplashFragment
+import java.util.logging.Logger
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -36,7 +37,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //cara lama
         //val inflater = LayoutInflater.from(this)
         //splashScreenActivity = inflater.inflate(R.layout.activity_splash_screen, null)
@@ -51,14 +51,14 @@ class SplashScreenActivity : AppCompatActivity() {
             val layout = layoutInflater.inflate(R.layout.test_layout, null)
             setContentView((splashBinding as FragmentSplashBinding).root)
             iteration++
-            Handler().postDelayed({AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)}, 1500)
+            Handler(Looper.getMainLooper()).postDelayed({AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)}, 1500)
+//            recreate()
         }
         else {
             splashBinding = ActivitySplashScreenBinding.inflate(layoutInflater)
             setContentView((splashBinding as ActivitySplashScreenBinding).root)
             determine()
             Log.d("ayolahmamen", "iteration: $iteration")
-
         }
 
 //        setContentView(splashBinding.root)

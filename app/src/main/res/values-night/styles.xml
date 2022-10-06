@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="heading_style_font" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textSize">@dimen/_20ssp</item>
+        <item name="android:textColor">@color/dark_primary_text</item>
+    </style>
+
+    <style name="heading_style_font_with_padding" parent="heading_style_font">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="content_style_font" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="my_cardview_style" parent="Theme.MaterialComponents.DayNight">
+        <item name="cardBackgroundColor">@color/dark_light</item>
+    </style>
+</resources>

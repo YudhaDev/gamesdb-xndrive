@@ -14,8 +14,13 @@ import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.models.data.GameModel
 import com.xndrive.gamesdb.etc.MyGlideManager
 
-class AdapterHomeRecycler(val context : Context, val list : List<GameModel>) : RecyclerView.Adapter<AdapterHomeRecycler.Viewholder>() {
+class AdapterHomeRecycler(private val context : Context, private val list : List<GameModel>, private val mode : String) : RecyclerView.Adapter<AdapterHomeRecycler.Viewholder>() {
     private lateinit var onItemCallback : onItemClickCallback
+
+    companion object {
+        val HORIZONTAL : String = "horizontal"
+        val VERTICAL : String = "vertical"
+    }
 
     fun setOnItemClickCallback(itemcallback : onItemClickCallback){
         this.onItemCallback = itemcallback
@@ -36,8 +41,18 @@ class AdapterHomeRecycler(val context : Context, val list : List<GameModel>) : R
         viewType: Int
     ): AdapterHomeRecycler.Viewholder {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.items_gamelayout,parent, false)
-        return Viewholder(view)
+        var view:View? = null
+        when(mode){
+            HORIZONTAL -> {
+                view = inflater.inflate(R.layout.items_gamelayout_horizontal,parent, false)
+
+            }
+            VERTICAL -> {
+                view = inflater.inflate(R.layout.items_gamelayout,parent, false)
+
+            }
+        }
+        return Viewholder(view!!)
     }
 
     override fun onBindViewHolder(holder: AdapterHomeRecycler.Viewholder, position: Int) {
@@ -71,6 +86,7 @@ class AdapterHomeRecycler(val context : Context, val list : List<GameModel>) : R
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return 5 //maksimal nampilin 5 aja
+//        return list.size
     }
 }
