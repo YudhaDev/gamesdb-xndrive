@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_pickStarFragment_to_writeReviewFragment"
             app:destination="@id/writeReviewFragment" />
+        <argument
+            android:name="game_object"
+            app:argType="com.xndrive.gamesdb.models.data.GameModel"
+            />
     </fragment>
     <fragment
         android:id="@+id/writeReviewFragment"
@@ -24,6 +28,10 @@
              app:argType="string"
              android:defaultValue="5"
              />
+        <argument
+            android:name="game_object"
+            app:argType="com.xndrive.gamesdb.models.data.GameModel"
+            />
 
     </fragment>
 </navigation>

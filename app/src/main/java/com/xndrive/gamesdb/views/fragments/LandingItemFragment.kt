@@ -34,11 +34,11 @@ class LandingItemFragment(private val position: Int) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         when(position){
-            1 -> {
+            0 -> {
                 fragmentLandingItemFragment = LandingFirstpageBinding.inflate(layoutInflater)
                 return (fragmentLandingItemFragment as LandingFirstpageBinding).root
             }
-            2 -> {
+            1 -> {
                 fragmentLandingItemFragment = LandingSecondpageBinding.inflate(layoutInflater)
                 return (fragmentLandingItemFragment as LandingSecondpageBinding).root
             }

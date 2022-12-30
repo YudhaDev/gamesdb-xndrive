@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/pink">
 
+    <ImageView
+        android:id="@+id/landing_firstpage_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/landing2"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

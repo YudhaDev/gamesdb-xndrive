@@ -1,13 +1,18 @@
 package com.xndrive.gamesdb.views.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.databinding.FragmentPickStarBinding
+import com.xndrive.gamesdb.models.data.GameModel
+import com.xndrive.gamesdb.views.activities.RateGameActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +28,8 @@ class PickStarFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var game_object: GameModel? = null
+    private lateinit var fragmentActivity : RateGameActivity
 
     private lateinit var fragmentPickStarBinding: FragmentPickStarBinding
 
@@ -32,6 +39,7 @@ class PickStarFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        fragmentActivity = activity as RateGameActivity
     }
 
     override fun onCreateView(
@@ -46,13 +54,21 @@ class PickStarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         determine()
+
+//        val game_object_args : PickStarFragmentArgs by navArgs()
+//        Toast.makeText(context, "${game_object_args.gameObject.title}", Toast.LENGTH_SHORT).show()
+
     }
 
     private fun determine() {
         fragmentPickStarBinding.fragmentPickStarNextBtn.setOnClickListener {
 //            findNavController().navigate(R.id.action_pickStarFragment_to_writeReviewFragment)
             val rating = fragmentPickStarBinding.fragmentPickStarRatingbar.rating.toString()
-            findNavController().navigate(PickStarFragmentDirections.actionPickStarFragmentToWriteReviewFragment(rating))
+            findNavController().navigate(PickStarFragmentDirections.actionPickStarFragmentToWriteReviewFragment(
+                        fragmentActivity.game_object,
+                        rating,
+                )
+            )
         }
     }
 

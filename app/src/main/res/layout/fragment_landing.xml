@@ -17,6 +17,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/fragment_landing_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:dotsColor="@color/dark_light"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsWidthFactor="2.5"
+        app:selectedDotColor="@color/pink"
+        app:progressMode="true"
+        android:layout_marginBottom="@dimen/_60sdp"
+        />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_landing_lewati_btn"
         android:layout_width="wrap_content"

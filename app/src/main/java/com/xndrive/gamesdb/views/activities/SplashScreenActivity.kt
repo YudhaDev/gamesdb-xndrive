@@ -82,11 +82,9 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     override fun recreate() {
-        Log.d("ayolahmamen", "masuk recreate")
         finish()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        Log.d("ayolahmamen", "keluar recreate")
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)  
     }
 }

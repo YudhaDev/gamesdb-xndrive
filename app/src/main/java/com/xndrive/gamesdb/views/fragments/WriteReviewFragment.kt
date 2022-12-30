@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.xndrive.gamesdb.databinding.FragmentWriteReviewBinding
@@ -41,6 +42,7 @@ class WriteReviewFragment : Fragment() {
         fragmentWriteReviewBinding = FragmentWriteReviewBinding.inflate(layoutInflater)
 
         val args : WriteReviewFragmentArgs by navArgs()
+        Toast.makeText(context, "${args.gameObject.title}", Toast.LENGTH_SHORT).show()
         fragmentWriteReviewBinding.fragmentWriteReviewRatingbar.rating = args.rating.toFloat()
         return fragmentWriteReviewBinding.root
     }

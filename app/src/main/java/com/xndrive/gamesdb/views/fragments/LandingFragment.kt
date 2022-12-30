@@ -3,10 +3,13 @@ package com.xndrive.gamesdb.views.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
@@ -61,6 +64,35 @@ class LandingFragment : Fragment() {
             startActivity(Intent(requireActivity(), HomeActivity::class.java))
             requireActivity().finish()
         }
+
+        val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback(){
+            var isHidden = false
+            override fun onPageSelected(position: Int) {
+                when(position){
+                    2-> {
+                        val animation_slide_out = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down_exit_for_views)
+                        animation_slide_out.fillAfter = true
+                        fragmentLandingBinding.fragmentLandingLewatiBtn.startAnimation(animation_slide_out)
+                        fragmentLandingBinding.fragmentLandingIndicator.startAnimation(animation_slide_out)
+                        isHidden=true
+                    }
+                    else -> {
+                        if (isHidden) {
+                            val animation_slide_in = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up_enter_for_views)
+                            animation_slide_in.fillAfter = true
+                            fragmentLandingBinding.fragmentLandingLewatiBtn.startAnimation(animation_slide_in)
+                            fragmentLandingBinding.fragmentLandingIndicator.startAnimation(animation_slide_in)
+                            isHidden=false
+                        }
+                    }
+                }
+                super.onPageSelected(position)
+            }
+        }
+        fragmentLandingBinding.fragmentLandingViewpager.adapter = MyViewPagerAdapter(requireActivity() as AppCompatActivity)
+        fragmentLandingBinding.fragmentLandingIndicator.setViewPager2(fragmentLandingBinding.fragmentLandingViewpager)
+        fragmentLandingBinding.fragmentLandingViewpager.registerOnPageChangeCallback(onPageChangeCallback)
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -71,6 +103,7 @@ class LandingFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             if (position<2){
+//                Log.d("cnuy", "$position")
                 return LandingItemFragment(position)
             } else {
                 return LandingLastFragment()

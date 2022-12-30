@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.xndrive.gamesdb.R
 import com.xndrive.gamesdb.databinding.ActivityGameDetailBinding
 import com.xndrive.gamesdb.models.data.GameModel
@@ -34,20 +32,27 @@ class GameDetailActivity : AppCompatActivity() {
     }
 
     private fun generate() {
-        val data = intent.extras!!.get(HomeActivity.HOMEACTIVITY_EXTRAKEY) as GameModel
-        activityGameDetailBinding.activityDetailGametitleTextview.setText(data.title)
-        activityGameDetailBinding.activityDetailGamedeveloperTextview.setText(data.developer)
-        activityGameDetailBinding.activityDetailGamedescriptionTextview.setText(data.description)
+        val game_object = intent.extras!!.get(HomeActivity.HOMEACTIVITY_EXTRAKEY) as GameModel
+        //cara lama
+//        activityGameDetailBinding.activityDetailGametitleTextview.setText(data.title)
+//        activityGameDetailBinding.activityDetailGamedeveloperTextview.setText(data.developer)
+//        activityGameDetailBinding.activityDetailGamedescriptionTextview.setText(data.description)
+//        Toast.makeText(this, "${data.description}", Toast.LENGTH_SHORT).show()
+        //pakai viewbinding
+        activityGameDetailBinding.game = game_object
 
         val myGlideManager =
-            MyGlideManager(this, data.picture2, activityGameDetailBinding.activityDetailGameimageImageview)
+            MyGlideManager(this, game_object.picture2, activityGameDetailBinding.activityDetailGameimageImageview)
         myGlideManager.generateImage()
     }
 
     private fun determine() {
         activityGameDetailBinding.activityDetailRatingBtn.setOnClickListener {
             _ ->
-            startActivity(Intent(this, RateGameActivity::class.java))
+            val game_object = intent.extras!!.get(HomeActivity.HOMEACTIVITY_EXTRAKEY) as GameModel
+            intent = Intent(this, RateGameActivity::class.java)
+            intent.putExtra("game_object", game_object)
+            startActivity(intent)
         }
         activityGameDetailBinding.activityDetailBuyBtn.setOnClickListener {
             Toast.makeText(applicationContext, "Fitur masih belum tersedia. ^^", Toast.LENGTH_SHORT)
