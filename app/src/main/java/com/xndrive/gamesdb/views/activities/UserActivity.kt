@@ -20,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.graphics.drawable.toBitmap
+import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -360,6 +361,16 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                             isFirstResource: Boolean
                         ): Boolean {
                             val bitmap = resource!!.toBitmap()
+                            Palette.from(bitmap)
+                                .generate{
+                                    palette ->
+                                    palette.let {
+                                        val intColor = palette?.lightVibrantSwatch?.rgb  ?:0
+                                        Toast.makeText(baseContext, "color: ${intColor}", Toast.LENGTH_SHORT).show()
+                                        userActivityBinding.activityUserMainlayout.setBackgroundColor(intColor)
+                                    }
+
+                                }
                             saveImageToInternal(bitmap)
                             return false
                         }

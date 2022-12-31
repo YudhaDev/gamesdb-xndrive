@@ -51,8 +51,8 @@ class SplashScreenActivity : AppCompatActivity() {
             val layout = layoutInflater.inflate(R.layout.test_layout, null)
             setContentView((splashBinding as FragmentSplashBinding).root)
             iteration++
-            Handler(Looper.getMainLooper()).postDelayed({AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)}, 1500)
-//            recreate()
+            Handler(Looper.getMainLooper()).postDelayed({AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)}, 1500)
+            recreate()
         }
         else {
             splashBinding = ActivitySplashScreenBinding.inflate(layoutInflater)
