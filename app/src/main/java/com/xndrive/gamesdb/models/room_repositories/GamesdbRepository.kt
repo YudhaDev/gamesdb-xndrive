@@ -1,9 +1,8 @@
 package com.xndrive.gamesdb.models.room_repositories
 
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.asLiveData
+import com.xndrive.gamesdb.models.data.UserBiodataModel
 import com.xndrive.gamesdb.models.room_dao.UserBiodataDAO
 import com.xndrive.gamesdb.models.room_dao.UserFavGameDAO
 import com.xndrive.gamesdb.models.room_entities.UserBiodataEntity
@@ -25,7 +24,11 @@ class GamesdbRepository(
 
     fun getAllUser() = userDao.getAllUser()
 
-    suspend fun updateUserBiodata(){}
+    @WorkerThread
+    suspend fun updateUserBiodata(userBiodataEntity: UserBiodataEntity){
+        userDao.updateUserBiodate(userBiodataEntity)
+    }
 
     suspend fun insertFavGame(){}
+
 }

@@ -48,13 +48,15 @@ import com.xndrive.gamesdb.viewmodels.GamesdbViewModelFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 import java.util.*
+import kotlin.Exception
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private var modalBottomsheetBehaviour: ModalBottomsheet? = null
 //    private var userActivityBinding: ActivityUserBinding? = null
-    private lateinit var userActivityBinding: ActivityUserBinding
+    public lateinit var userActivityBinding: ActivityUserBinding
+    public var userModel: UserBiodataModel? = null
+
 
 
     private val userActivityViewmodel: GamesdbViewModel by viewModels {
@@ -65,8 +67,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         val CAMERA_CODE = 111
         val GALLERY_CODE = 112
         val IMAGE_SUFFIX = "gamesdb"
-        var userModel: UserBiodataModel? = null
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,9 +85,41 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             this.activityUserEmailUser.setOnClickListener(this@UserActivity)
         }
         if (userModel==null){
-            userModel = UserBiodataModel("kosong", "Isikan Nama User", "Isikan Email User")
+//            userModel = UserBiodataModel("kosong", "Isikan Nama User", "Isikan Email User")
+//            userActivityViewmodel.getUserBiodata(1).observe(this, {
+//                user ->
+//                Toast.makeText(this@UserActivity, "${user.toString()}", Toast.LENGTH_SHORT).show()
+//                Log.d("cnnuy", "${user.toString()}")
+//            })
+
+
+//            userActivityViewmodel.getUserBiodata(1).observe(this) {
+//                val userModelEntity = it.get(0)
+//                val user = UserBiodataModel(
+//                    userModelEntity.user_profile_image,
+//                    userModelEntity.user_name,
+//                    userModelEntity.user_email
+//                )
+//                userActivityBinding.user = user
+//            }
+
+
+
+            try {
+                userActivityViewmodel.getUserBiodata(1).observe(this) {
+                    val userModelEntity = it.get(0)
+                    val user = UserBiodataModel(
+                        userModelEntity.user_profile_image,
+                        userModelEntity.user_name,
+                        userModelEntity.user_email
+                    )
+                    userActivityBinding.user = user
+                }
+            } catch (e: Exception){
+                userModel = UserBiodataModel("kosong", "Isikan Nama User", "Isikan Email User")
+                userActivityBinding.user = userModel
+            }
         }
-        userActivityBinding.user = userModel
     }
 
 
@@ -97,6 +129,10 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 modalImagePick()
             }
             R.id.activity_user_simpan_perubahan_btn -> {
+//                val user = UserBiodataModel("test", "test-username", "test-email")
+//                userActivityBinding.user = user
+                
+                
                 val userBiodataEntity = UserBiodataEntity(
                     userModel!!.user_photo_profile_path,
                     userModel!!.user_name,
@@ -119,6 +155,10 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                         Log.d("gamesdblog-getalluser", item.toString())
                     }
                 })
+
+
+
+
 //                userActivityViewmodel.getUserBiodata(0).observe(this) { user_biodata ->
 //                    for (item in user_biodata) {
 //                        Log.v("gamesdblog", item.toString())
@@ -131,7 +171,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.activity_user_email_user -> {
                 showEditUser()
-
             }
         }
     }
@@ -142,7 +181,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 modalBottomsheetBehaviour!!.show(supportFragmentManager, "ModalBottomSheet")
             } else {
                 modalBottomsheetBehaviour = ModalBottomsheet(
-                    userModel!!
+                    userActivityBinding.user!!, this@UserActivity
                 )
                 modalBottomsheetBehaviour!!.modalBottomsheetView = modalBottomsheetBehaviour
                 modalBottomsheetBehaviour!!.activityUserBinding = userActivityBinding
@@ -157,7 +196,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
 
     class ModalBottomsheet(
-        private val userModel : UserBiodataModel
+        private val userModel : UserBiodataModel, private val cOntext: Context
     ) : BottomSheetDialogFragment(), View.OnClickListener {
         var modalBottomsheetView: ModalBottomsheet? = null
         var activityUserBinding: ActivityUserBinding? = null
@@ -193,10 +232,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                         userModel.user_email =
                             this.bottomsheetEditUserBiodataEmailEdittext.text.toString()
                     }
-                    with(UserActivity) {
-                        this.userModel = userModel
-                        activityUserBinding!!.user =this.userModel
-                    }
+                    Toast.makeText(cOntext, "${userModel.toString()}", Toast.LENGTH_SHORT).show()
+//                    (cOntext as UserActivity).userActivityBinding.user = userModel
                     modalBottomsheetView!!.dismiss()
                 }
             }

@@ -15,7 +15,11 @@ interface UserBiodataDAO {
 //    suspend fun updateUserBiodata()
     @Query("SELECT * FROM user_biodata WHERE user_id = :user_id")
     fun getUserBiodata(user_id: Int) : Flow<List<UserBiodataEntity>>
+    @Query("SELECT * FROM user_biodata WHERE user_id = :user_id")
+    fun getUserBiodataNonMVM(user_id: Int) : UserBiodataEntity
     @Query("SELECT * FROM user_biodata")
     fun getAllUser() : Flow<List<UserBiodataEntity>>
+    @Update
+    suspend fun updateUserBiodate(userBiodataEntity: UserBiodataEntity)
 
 }
