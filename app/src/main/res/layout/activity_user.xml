@@ -6,7 +6,7 @@
     <data>
         <variable
             name="user"
-            type="com.xndrive.gamesdb.models.data.UserBiodataModel" />
+            type="com.xndrive.gamesdb.models.room_entities.UserBiodataEntity" />
 
     </data>
 

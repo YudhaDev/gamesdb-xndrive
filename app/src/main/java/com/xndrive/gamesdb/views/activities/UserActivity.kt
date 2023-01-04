@@ -53,10 +53,10 @@ import kotlin.Exception
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private var modalBottomsheetBehaviour: ModalBottomsheet? = null
-//    private var userActivityBinding: ActivityUserBinding? = null
-    public lateinit var userActivityBinding: ActivityUserBinding
-    public var userModel: UserBiodataModel? = null
 
+    //    private var userActivityBinding: ActivityUserBinding? = null
+    public lateinit var userActivityBinding: ActivityUserBinding
+    public var userModel: UserBiodataEntity? = null
 
 
     private val userActivityViewmodel: GamesdbViewModel by viewModels {
@@ -84,7 +84,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             this.activityUserNamaUserTextview.setOnClickListener(this@UserActivity)
             this.activityUserEmailUser.setOnClickListener(this@UserActivity)
         }
-        if (userModel==null){
+        if (userModel == null) {
 //            userModel = UserBiodataModel("kosong", "Isikan Nama User", "Isikan Email User")
 //            userActivityViewmodel.getUserBiodata(1).observe(this, {
 //                user ->
@@ -104,21 +104,24 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 //            }
 
 
-
-            try {
-                userActivityViewmodel.getUserBiodata(1).observe(this) {
-                    val userModelEntity = it.get(0)
-                    val user = UserBiodataModel(
-                        userModelEntity.user_profile_image,
-                        userModelEntity.user_name,
-                        userModelEntity.user_email
-                    )
-                    userActivityBinding.user = user
+            userActivityViewmodel.getUserBiodata(1).observe(this) {
+                try {
+                    val userBiodataEntity = it.get(0)
+//                    val user = UserBiodataModel(
+//                        userBiodataEntity.user_profile_image,
+//                        userBiodataEntity.user_name,
+//                        userBiodataEntity.user_email,
+//                        userBiodataEntity.user_id
+//                    )
+                    userActivityBinding.user = userBiodataEntity
+                    userModel = userBiodataEntity
+                } catch (e: Exception) {
+                    userModel =
+                        UserBiodataEntity("kosong", "Isikan Nama User", "Isikan Email User")
+                    userActivityBinding.user = userModel
                 }
-            } catch (e: Exception){
-                userModel = UserBiodataModel("kosong", "Isikan Nama User", "Isikan Email User")
-                userActivityBinding.user = userModel
             }
+
         }
     }
 
@@ -129,20 +132,12 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 modalImagePick()
             }
             R.id.activity_user_simpan_perubahan_btn -> {
-//                val user = UserBiodataModel("test", "test-username", "test-email")
-//                userActivityBinding.user = user
-                
-                
-                val userBiodataEntity = UserBiodataEntity(
-                    userModel!!.user_photo_profile_path,
-                    userModel!!.user_name,
-                    userModel!!.user_email
-                )
                 try {
-                    userActivityViewmodel.insert(userBiodataEntity)
+                    //userActivityViewmodel.insert(userBiodataEntity)
+                    userActivityViewmodel.updateUserBiodata(userActivityBinding!!.user!!)
                 } catch (e: Exception) {
-                    Log.e("gamesdb-room", "${e.toString()}")
-                    Toast.makeText(this, "${e.toString()}", Toast.LENGTH_LONG).show()
+//                    Log.e("gamesdb-room", "${e.toString()}")
+//                    Toast.makeText(this, "${e.toString()}", Toast.LENGTH_LONG).show()
                 }
                 Toast.makeText(
                     applicationContext,
@@ -155,8 +150,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                         Log.d("gamesdblog-getalluser", item.toString())
                     }
                 })
-
-
 
 
 //                userActivityViewmodel.getUserBiodata(0).observe(this) { user_biodata ->
@@ -181,7 +174,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 modalBottomsheetBehaviour!!.show(supportFragmentManager, "ModalBottomSheet")
             } else {
                 modalBottomsheetBehaviour = ModalBottomsheet(
-                    userActivityBinding.user!!, this@UserActivity
+                    userActivityBinding.user!!, userActivityBinding
                 )
                 modalBottomsheetBehaviour!!.modalBottomsheetView = modalBottomsheetBehaviour
                 modalBottomsheetBehaviour!!.activityUserBinding = userActivityBinding
@@ -196,7 +189,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
 
     class ModalBottomsheet(
-        private val userModel : UserBiodataModel, private val cOntext: Context
+        private val userModel: UserBiodataEntity,
+        private val userActivityBinding: ActivityUserBinding
     ) : BottomSheetDialogFragment(), View.OnClickListener {
         var modalBottomsheetView: ModalBottomsheet? = null
         var activityUserBinding: ActivityUserBinding? = null
@@ -228,12 +222,13 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             when (p0!!.id) {
                 R.id.bottomsheet_edit_user_biodata_ok_btn -> {
                     with(modalBottomsheetBinding!!) {
-                        userModel.user_name = this.bottomsheetEditUserBiodataNameEdittext.text.toString()
+                        userModel.user_name =
+                            this.bottomsheetEditUserBiodataNameEdittext.text.toString()
                         userModel.user_email =
                             this.bottomsheetEditUserBiodataEmailEdittext.text.toString()
                     }
-                    Toast.makeText(cOntext, "${userModel.toString()}", Toast.LENGTH_SHORT).show()
-//                    (cOntext as UserActivity).userActivityBinding.user = userModel
+//                    Toast.makeText(context, "${userModel.toString()}", Toast.LENGTH_SHORT).show()
+                    userActivityBinding.user = userModel
                     modalBottomsheetView!!.dismiss()
                 }
             }
@@ -399,12 +394,17 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                         ): Boolean {
                             val bitmap = resource!!.toBitmap()
                             Palette.from(bitmap)
-                                .generate{
-                                    palette ->
+                                .generate { palette ->
                                     palette.let {
-                                        val intColor = palette?.lightVibrantSwatch?.rgb  ?:0
-                                        Toast.makeText(baseContext, "color: ${intColor}", Toast.LENGTH_SHORT).show()
-                                        userActivityBinding.activityUserMainlayout.setBackgroundColor(intColor)
+                                        val intColor = palette?.lightVibrantSwatch?.rgb ?: 0
+                                        Toast.makeText(
+                                            baseContext,
+                                            "color: ${intColor}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        userActivityBinding.activityUserMainlayout.setBackgroundColor(
+                                            intColor
+                                        )
                                     }
 
                                 }
